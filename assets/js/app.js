@@ -215,7 +215,7 @@ function autoLayoutParticipants() {
 
   model.participants.forEach(function (p) {
     var tw = Math.ceil(measureHeaderWidth(p.label)) + 6;
-    p.headW = tw - 80;
+    p.headW = tw -5;
   });
 
   var x = DIAGRAM_CONFIG.layout.LEFT_PAD;
@@ -830,4 +830,5 @@ document.getElementById("zoomResetBtn").onclick = function () { zoom = 1; applyZ
     render(xmlStrInitial);
   } catch (e) { console.error("init", e); }
 })();
+
 
