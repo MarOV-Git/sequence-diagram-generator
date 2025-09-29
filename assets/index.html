@@ -5,6 +5,48 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Viewer</title>
   <link rel="stylesheet" href="css/app.css">
+  <style>
+    /* Toolbar flexible */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;       /* permite que los elementos salten a la siguiente línea */
+      gap: 8px;              /* espacio entre botones */
+      padding: 8px;
+      border-bottom: 1px solid #eee;
+      background: #fafafa;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      align-items: center;
+    }
+
+    .btn, .sel {
+      padding: 6px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .zoom-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .zoom-pct {
+      min-width: 45px;
+      text-align: center;
+    }
+
+    .ghost {
+      background: #f5f5f5;
+    }
+
+    .stage {
+      flex: 1;
+    }
+  </style>
 </head>
 <body>
   <!-- Config and XML injected by Streamlit -->
@@ -13,11 +55,9 @@
 
   <div id="app">
     <div id="toolbar" class="toolbar">
-      <!-- WITHOUT Render button -->
       <button id="autoBtn" class="btn">Auto width</button>
       <button id="spaceVBtn" class="btn">Space V</button>
       <button id="reNumBtn" class="btn">Renumber</button>
-
       <button id="exportBtn" class="btn">Export XML</button>
       <button id="tplBtn" class="btn">Template/Import</button>
 
