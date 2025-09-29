@@ -1,0 +1,71 @@
+:root{
+  --bg:#0f1115;
+  --ink:#111;
+  --ink-weak:#6b7280;
+
+  --toolbar-bg:#ffffff;
+  --toolbar-border:#e5e7eb;
+
+  --btn-bg:#f8fafc;
+  --btn-border:#d1d5db;
+  --btn-hover:#eef2ff;
+  --btn-ghost:#f3f4f6;
+
+  --header-fill:#ffffff;   /* se sobrescribe desde JS */
+  --header-stroke:#cfcfcf; /* se sobrescribe desde JS */
+  --lifeline-height:700px; /* se sobrescribe desde JS */
+}
+
+*{ box-sizing: border-box; }
+html,body{ height:100%; margin:0; background:var(--bg); }
+
+body, svg, text, .label-text{
+  /* Arial forzado para pantalla y export */
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+}
+
+.toolbar{
+  position:sticky; top:0; z-index:10;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:.75rem; padding:.5rem .75rem;
+  background:var(--toolbar-bg); border-bottom:1px solid var(--toolbar-border);
+}
+.toolbar-left, .toolbar-mid, .toolbar-right { display:flex; gap:.5rem; align-items:center; }
+
+.btn{
+  appearance:none; border:1px solid var(--btn-border);
+  background:var(--btn-bg); color:var(--ink);
+  padding:.36rem .65rem; border-radius:10px; cursor:pointer;
+  transition: background .12s, border-color .12s, transform .02s, box-shadow .12s;
+  font-size:14px;
+}
+.btn:hover{ background:var(--btn-hover); border-color:#c7d2fe; box-shadow:0 1px 0 rgba(0,0,0,.04); }
+.btn:active{ transform:translateY(1px); }
+.btn.ghost{ background:var(--btn-ghost); }
+
+.sel{
+  padding:.3rem .5rem; border:1px solid var(--btn-border);
+  border-radius:10px; background:#fff; color:var(--ink);
+}
+
+.stage{
+  width:100%; height:calc(100vh - 56px);
+  background:#fff; border-top:1px solid var(--toolbar-border);
+  overflow:auto;
+}
+.viewport{ width:100%; height:100%; transform-origin:0 0; }
+
+svg{ user-select:none; -webkit-tap-highlight-color: transparent; }
+
+/* Estilos del diagrama */
+.head rect{ fill:var(--header-fill); stroke:var(--header-stroke); }
+.lifeline{ stroke:#cfcfcf; stroke-width:1; stroke-dasharray:4 6; }
+.msg{ stroke:#111; stroke-width:1.4; fill:none; }
+.label-text{ font-size:12px; fill:#111; }
+.label-bubble{ fill:#fff; stroke:#e5e7eb; }
+.activation{ fill:#eef2ff; stroke:#c7d2fe; }
+.badge circle{ stroke:#2563EB; fill:#2563EB; }
+.endpoint{ fill:#111; }
+.handle{ fill:#2563EB; opacity:.85; }
+.handle-halo{ fill:#2563EB; opacity:.08; }
+.dragging rect{ filter: drop-shadow(0 3px 8px rgba(0,0,0,.15)); }

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Viewer</title>
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <!-- Config and XML injected by Streamlit -->
+  <script id="init-config" type="application/json">/*INIT_CONFIG_JSON*/</script>
+  <script id="initial-xml" type="text/plain"><!--XML_PAYLOAD--></script>
+
+  <div id="app">
+    <div id="toolbar" class="toolbar">
+      <!-- WITHOUT Render button -->
+      <button id="autoBtn" class="btn">Auto width</button>
+      <button id="spaceVBtn" class="btn">Space V</button>
+      <button id="reNumBtn" class="btn">Renumber</button>
+
+      <button id="exportBtn" class="btn">Export XML</button>
+      <button id="tplBtn" class="btn">Template/Import</button>
+
+      <select id="scaleSel" class="sel">
+        <option>1x</option>
+        <option selected>2x</option>
+        <option>3x</option>
+        <option>4x</option>
+      </select>
+      <button id="exportPngBtn" class="btn">PNG</button>
+      <button id="exportJpgBtn" class="btn">JPG</button>
+
+      <div class="zoom-group">
+        <button id="zoomOutBtn" class="btn">−</button>
+        <span id="zoomPct" class="zoom-pct">100%</span>
+        <button id="zoomInBtn" class="btn">+</button>
+        <button id="zoomResetBtn" class="btn ghost">Reset</button>
+      </div>
+    </div>
+
+    <div id="stage" class="stage">
+      <div id="viewport" class="viewport">
+        <svg id="svg" viewBox="0 0 1600 900" class="svg"></svg>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>
