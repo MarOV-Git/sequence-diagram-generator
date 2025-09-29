@@ -16,7 +16,7 @@ const DIAGRAM_CONFIG = {
     LIFELINE_H: Number(CONFIG.LIFELINE_H || 700),
     TOP_PAD: 90,
     LEFT_PAD: 30,
-    HEAD_MIN_W: 140,
+    HEAD_MIN_W: 240,
     HEAD_PAD_X: 16,
     SAFETY_MARGIN: 24,
     BOTTOM_PAD: 170,
@@ -830,3 +830,4 @@ document.getElementById("zoomResetBtn").onclick = function () { zoom = 1; applyZ
     render(xmlStrInitial);
   } catch (e) { console.error("init", e); }
 })();
+
