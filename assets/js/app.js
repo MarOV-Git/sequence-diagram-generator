@@ -256,16 +256,23 @@ function recomputeYByOrder() {
   }
 }
 
-/* ===== Renumerar por Y visible ===== */
 function renumberAll(opts) {
-  opts = opts || { selfLoopCountsAsTwo: true };
+  opts = opts || { selfLoopCountsAsTwo: false };  // <--- cámbialo a false
   var valid = model.messages.filter(m => m && m._fromOk && m._toOk);
   var sorted = stableSortByY(valid);
   var k = 1;
   sorted.forEach(function (m) {
     m.step = String(k++);
-    if (m.from === m.to) m.endStep = (opts.selfLoopCountsAsTwo ? String(k++) : String(m.step));
-    else m.endStep = null;
+    if (m.from === m.to) {
+      // ahora NO incrementa de más
+      if (opts.selfLoopCountsAsTwo) {
+        m.endStep = String(k++);
+      } else {
+        m.endStep = null;
+      }
+    } else {
+      m.endStep = null;
+    }
   });
 }
 
@@ -830,6 +837,7 @@ document.getElementById("zoomResetBtn").onclick = function () { zoom = 1; applyZ
     render(xmlStrInitial);
   } catch (e) { console.error("init", e); }
 })();
+
 
 
 
