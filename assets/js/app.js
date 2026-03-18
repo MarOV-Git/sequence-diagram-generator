@@ -90,15 +90,18 @@ function parseXML(str) {
 }
 
 /* ===== Medición ===== */
-var measureSvg = SVGe("svg", { id: "measure-layer" });
+// Off-screen SVG kept for wrapTextCenter (needs DOM text elements)
+var measureSvg = SVGe("svg", { id: "measure-layer", width: "2000", height: "200" });
+measureSvg.style.cssText = "position:absolute;left:-9999px;top:-9999px;visibility:hidden";
 document.body.appendChild(measureSvg);
+
+// Canvas measureText is synchronous and iframe-safe — no getBBox timing issues
+var _measureCanvas = document.createElement("canvas");
+var _measureCtx = _measureCanvas.getContext("2d");
 function measureHeaderWidth(text) {
-  var t = textEl(0, 0, text, "header-text");
-  t.setAttribute("style", "font-size:" + DIAGRAM_CONFIG.style.HEADER_FONT_SIZE + "px;font-weight:" + DIAGRAM_CONFIG.style.HEADER_FONT_WEIGHT + ";font-family:Arial,Helvetica,sans-serif");
-  measureSvg.appendChild(t);
-  var w = t.getBBox().width;
-  measureSvg.removeChild(t);
-  return w;
+  _measureCtx.font = DIAGRAM_CONFIG.style.HEADER_FONT_WEIGHT + " " +
+    DIAGRAM_CONFIG.style.HEADER_FONT_SIZE + "px Arial,Helvetica,sans-serif";
+  return _measureCtx.measureText(String(text || "")).width;
 }
 
 /* ===== THEME dinámico ===== */
@@ -825,18 +828,10 @@ document.getElementById("zoomResetBtn").onclick = function () { zoom = 1; applyZ
 
 /* ===== Init ===== */
 (function () {
-  var xmlStrInitial = document.getElementById("initial-xml").textContent.trim();
-  var go = function () { try { render(xmlStrInitial); } catch (e) { console.error("init", e); } };
-  // Double rAF after fonts.ready ensures the browser has completed a full layout
-  // pass before getBBox() is called — required for correct text measurement in iframes
-  var afterFonts = function () {
-    requestAnimationFrame(function () { requestAnimationFrame(go); });
-  };
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(afterFonts);
-  } else {
-    setTimeout(go, 200);
-  }
+  try {
+    var xmlStrInitial = document.getElementById("initial-xml").textContent.trim();
+    render(xmlStrInitial);
+  } catch (e) { console.error("init", e); }
 })();
 
 
