@@ -439,10 +439,10 @@ function renderFromModel() {
   // título
   var title = textEl(20, 28, model.title); title.setAttribute("style", "font-weight:700;font-size:16px"); svg.appendChild(title);
 
-  // precálculo headers
+  // precálculo headers — misma fórmula que autoLayoutParticipants para mantener consistencia
   model.participants.forEach(function (p) {
     var tw = Math.ceil(measureHeaderWidth(p.label)) + 6;
-    p.headW = Math.max(DIAGRAM_CONFIG.layout.HEAD_MIN_W, tw + DIAGRAM_CONFIG.layout.HEAD_PAD_X * 2);
+    p.headW = Math.max(DIAGRAM_CONFIG.layout.HEAD_MIN_W, tw + 140);
     p.centerX = p.x + p.headW / 2;
   });
 
@@ -827,11 +827,15 @@ document.getElementById("zoomResetBtn").onclick = function () { zoom = 1; applyZ
 (function () {
   var xmlStrInitial = document.getElementById("initial-xml").textContent.trim();
   var go = function () { try { render(xmlStrInitial); } catch (e) { console.error("init", e); } };
-  // Wait for fonts before rendering so getBBox() returns correct text widths
+  // Double rAF after fonts.ready ensures the browser has completed a full layout
+  // pass before getBBox() is called — required for correct text measurement in iframes
+  var afterFonts = function () {
+    requestAnimationFrame(function () { requestAnimationFrame(go); });
+  };
   if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(go);
+    document.fonts.ready.then(afterFonts);
   } else {
-    go();
+    setTimeout(go, 200);
   }
 })();
 
