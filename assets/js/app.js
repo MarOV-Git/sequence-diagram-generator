@@ -831,6 +831,11 @@ document.getElementById("zoomResetBtn").onclick = function () { zoom = 1; applyZ
   try {
     var xmlStrInitial = document.getElementById("initial-xml").textContent.trim();
     render(xmlStrInitial);
+    // Re-apply layout after the browser has settled to ensure correct text measurement
+    setTimeout(function () {
+      if (autoBtn) autoBtn.click();
+      if (spaceVBtn) spaceVBtn.click();
+    }, 120);
   } catch (e) { console.error("init", e); }
 })();
 
