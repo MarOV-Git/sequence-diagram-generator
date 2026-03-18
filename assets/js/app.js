@@ -825,10 +825,14 @@ document.getElementById("zoomResetBtn").onclick = function () { zoom = 1; applyZ
 
 /* ===== Init ===== */
 (function () {
-  try {
-    var xmlStrInitial = document.getElementById("initial-xml").textContent.trim();
-    render(xmlStrInitial);
-  } catch (e) { console.error("init", e); }
+  var xmlStrInitial = document.getElementById("initial-xml").textContent.trim();
+  var go = function () { try { render(xmlStrInitial); } catch (e) { console.error("init", e); } };
+  // Wait for fonts before rendering so getBBox() returns correct text widths
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(go);
+  } else {
+    go();
+  }
 })();
 
 
