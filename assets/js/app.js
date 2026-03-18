@@ -787,16 +787,19 @@ document.getElementById("exportBtn").onclick = function () {
 };
 document.getElementById("tplBtn").onclick = function () {
   var tpl = '<?xml version="1.0" encoding="UTF-8"?>\n' +
-    '<sequence title="Mi Diagrama de Secuencia — Plantilla">\n' +
+    '<sequence title="Sequence Diagram">\n' +
     '  <participants>\n' +
-    '    <p id="oic" label="OIC"/>\n' +
-    '    <p id="ftp" label="FTP"/>\n' +
-    '    <p id="oci" label="OCI Object Storage"/>\n' +
-    '    <p id="erp" label="ERP"/>\n' +
+    '    <p id="client"  label="Client"   highlight="true"/>\n' +
+    '    <p id="service" label="Service"/>\n' +
+    '    <p id="db"      label="Database"/>\n' +
+    '    <p id="ext"     label="External"/>\n' +
     '  </participants>\n' +
     '  <messages>\n' +
-    '    <m from="oic" to="ftp" text="Paso 1"/>\n' +
-    '    <m from="ftp" to="ftp" text="Self-loop (ejemplo)"/>\n' +
+    '    <m from="client"  to="service" text="Request"/>\n' +
+    '    <m from="service" to="service" text="Process"/>\n' +
+    '    <m from="service" to="db"      text="Query"/>\n' +
+    '    <m from="db"      to="service" text="Result"  return="true"/>\n' +
+    '    <m from="service" to="client"  text="Response" return="true"/>\n' +
     '  </messages>\n' +
     '</sequence>';
   var blob = new Blob([tpl], { type: "application/xml" });
